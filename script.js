@@ -1,4 +1,5 @@
-var map = L.map('map').setView([-3.042273, -59.975629], 15);
+var map = L.map('map');
+map.locate({setView: true, maxZoom: 16});
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -15,3 +16,22 @@ function onMapClick(e) {
 }
 
 map.on('click', onMapClick);
+
+function onLocationError(e) {
+    alert(e.message);
+    map.setView([-3.042273, -59.975629], 15)
+}
+
+map.on('locationerror', onLocationError);
+
+
+function onLocationFound(e) {
+    var radius = e.accuracy;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+}
+
+map.on('locationfound', onLocationFound);
