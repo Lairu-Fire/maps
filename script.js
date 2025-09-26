@@ -15,15 +15,10 @@ function onMapClick(e) {
         .openOn(map);
 }
 
-map.on('click', onMapClick);
-
 function onLocationError(e) {
     alert(e.message);
     map.setView([-3.042273, -59.975629], 15)
 }
-
-map.on('locationerror', onLocationError);
-
 
 function onLocationFound(e) {
     var radius = e.accuracy;
@@ -35,3 +30,5 @@ function onLocationFound(e) {
 }
 
 map.on('locationfound', onLocationFound);
+map.on('locationerror', onLocationError);
+map.on('click', onMapClick);
